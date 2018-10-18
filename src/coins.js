@@ -23,7 +23,7 @@ let coins = {
         name: 'stellar',
         displayName:'Stellar',
         ticker:'XLM',
-        derive_path:"m/44'/144'/index'",
+        derive_path:"m/44'/148'/index'",
         getKeypair: function(key) {
             const keypair =  stellar_Keypair.fromRawEd25519Seed(key);
             const address = keypair.publicKey();
