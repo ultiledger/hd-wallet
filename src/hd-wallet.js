@@ -1,5 +1,8 @@
 var has = require('lodash/has')
 var bip39 = require('bip39')
+const bs58 = require('bs58')
+
+var hdkey = require('ethereumjs-wallet/hdkey')
 var derivePath = require('ed25519-hd-key').derivePath;
 var getMasterKeyFromSeed = require('ed25519-hd-key').getMasterKeyFromSeed;
 var getPublicKey = require('ed25519-hd-key').getPublicKey;
@@ -100,8 +103,24 @@ class HDWallet {
    */
   getAccount(coin,index) {
     let path = coin.derive_path.replace('index',index);
-    const data = derivePath(path, this.seedHex);
-    return coin.getKeypair(data.key);
+    if(coin.name == 'ethereum'){
+      let hdKey = hdkey.fromMasterSeed(new Buffer(this.seedHex, 'hex'));
+      let data =  hdKey.derivePath(path)
+      return coin.getKeypair(data);
+    }else if(coin.name == 'stellar' || coin.name == 'ripple'){
+      let data = derivePath(path, this.seedHex);
+      return coin.getKeypair(data.key);
+    }
+  }
+
+  _derive(coin, index){
+    let path = coin.derive_path.replace('index',index);
+    if(coin.name == 'ethereum'){
+      let hdKey = hdkey.fromMasterSeed(new Buffer(this.seedHex, 'hex'));
+      return hdKey.derivePath(path)
+    }else if(coin.name == 'stellar' || coin.name == 'ripple'){
+      return derivePath(path, this.seedHex);
+    }
   }
 
   static getAccountFromSecret(coin, secret) {
