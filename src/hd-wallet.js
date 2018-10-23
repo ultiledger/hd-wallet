@@ -117,6 +117,10 @@ class HDWallet {
     return coin.getKeypairFromSecret(secret);
   }
 
+  static sendTransaction(coin, fromSecret, to, option){
+    return coin.sendTransaction(fromSecret, to, option);
+  }
+
 }
 
 module.exports = HDWallet;
