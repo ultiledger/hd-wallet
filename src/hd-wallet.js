@@ -104,7 +104,7 @@ class HDWallet {
   getAccount(coin,index) {
     let path = coin.derive_path.replace('index',index);
     if(coin.name == 'ethereum'){
-      let hdKey = hdkey.fromMasterSeed(new Buffer(this.seedHex, 'hex'));
+      let hdKey = hdkey.fromMasterSeed(new Buffer.from(this.seedHex, 'hex'));
       let data =  hdKey.derivePath(path)
       return coin.getKeypair(data);
     }else if(coin.name == 'stellar' || coin.name == 'ripple'){

@@ -51,13 +51,13 @@ let coins = {
         derive_path:"m/44'/60'/0'/index'",
         getKeypair: function(hdKey) {
             let wallet = hdKey.getWallet()
-            let secret = wallet.getPrivateKeyString() //TODO: validate
+            let secret = wallet.getPrivateKeyString().substring(2)
             let address = wallet.getChecksumAddressString()
             return { secret, address };
           },
-        getKeypairBySecret:function(secret) {
-            const address = `0x${EthUtil.privateToAddress(hexToBytes(privateKey)).toString('hex')}`;
-            return { secret, address };
+        getKeypairFromSecret:function(secret) {
+            const address = `0x${EthUtil.privateToAddress(hexToBytes(secret)).toString('hex')}`;
+            return { secret, address};
         }
      },
 }
