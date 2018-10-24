@@ -101,24 +101,24 @@ class HDWallet {
    * @param {Number} index Account index into path m/44'/148'/{index}
    * @return {address:xxx,secret:xxx} Keypair instance for the account
    */
-  getAccount(coin,index) {
+  getAccount(coin, index) {
     let path = coin.derive_path.replace('index',index);
     if(coin.name == 'ethereum'){
       let hdKey = hdkey.fromMasterSeed(new Buffer.from(this.seedHex, 'hex'));
       let data =  hdKey.derivePath(path)
-      return coin.getKeypair(data);
+      return coin.wallet.getAccount(data);
     }else if(coin.name == 'stellar' || coin.name == 'ripple'){
       let data = derivePath(path, this.seedHex);
-      return coin.getKeypair(data.key);
+      return coin.wallet.getAccount(data.key);
     }
   }
 
   static getAccountFromSecret(coin, secret) {
-    return coin.getKeypairFromSecret(secret);
+    return coin.wallet.getAccountFromSecret(secret);
   }
 
   static sendTransaction(coin, fromSecret, to, option){
-    return coin.sendTransaction(fromSecret, to, option);
+    return coin.wallet.sendTransaction(fromSecret, to, option);
   }
 
 }

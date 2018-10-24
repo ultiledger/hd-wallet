@@ -1,5 +1,5 @@
-var HDWallet = require('../src/hd-wallet');
-var coins = require('../src/coins');
+const HDWallet = require('../src/hd-wallet');
+const coins = require('../src/assets/Assets');
 const assert = require('assert');
 
 
@@ -40,3 +40,5 @@ assert.deepEqual(ethkeypair.address, HDWallet.getAccountFromSecret(coins.ETH, et
 let ethAccount1 = wallet.getAccount(coins.ETH, 1);
 HDWallet.sendTransaction(coins.ETH, ethAccount0.secret, ethAccount1.address, {amount: "0.1"})
 //https://ropsten.etherscan.io/tx/0x0ea4079f8eeb314a854bb30715677e9db3608e4402813ad7bb8766928e397f37
+
+console.log('done')
