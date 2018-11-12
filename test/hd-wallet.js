@@ -41,4 +41,15 @@ let ethAccount1 = wallet.getAccount(coins.ETH, 1);
 HDWallet.sendTransaction(coins.ETH, ethAccount0.secret, ethAccount1.address, {amount: "0.1"})
 //https://ropsten.etherscan.io/tx/0x0ea4079f8eeb314a854bb30715677e9db3608e4402813ad7bb8766928e397f37
 
+// 生成bitcoin账户
+let btckeypair = {  secret:'L4wZvj8hwwakJ6PTjKaMAngchDr2L6SSUoAaDshJSV4sC3DmFtVX',
+                    address:'1M9VaPKbdsk78dqS85wtmoUaNjNY21p5x8'}
+let btcAccount0 = wallet.getAccount(coins.BTC,0);
+assert.deepEqual(btcAccount0.secret.toLowerCase(), btcAccount0.secret.toLowerCase());
+let btcAccount1 = wallet.getAccount(coins.BTC,1);
+console.log('btcAccount0',btcAccount0);
+console.log('btcAccount1',btcAccount1);
+HDWallet.getAccountFromSecret(coins.BTC,btcAccount0.secret)
+HDWallet.sendTransaction(coins.BTC,btcAccount0.secret,btcAccount1.address,{amount: "10000"});
+
 console.log('done')

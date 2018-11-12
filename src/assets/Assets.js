@@ -1,6 +1,8 @@
 const Ethereum = require('./Ethereum')
 const Stellar = require('./Stellar')
 const Ripple = require('./Ripple')
+const BitcoinCash = require('./BitcoinCash');
+const Bitcoin = require('./Bitcoin');
 
 let assets = {
     "XLM" : {
@@ -26,6 +28,20 @@ let assets = {
         "symbol": "XRP",
         "derive_path": "m/44'/144'/index'",
         "wallet" : new Ripple({}),
+    },
+    "BCH" : {
+        "name": "bitcoincash",
+        "displayName": "BitcoinCash",
+        "symbol": "BCH",
+        "derive_path": "m/44'/145'/0'/index'",
+        "wallet" : new BitcoinCash({}),
+    },
+    "BTC" : {
+        "name": "bitcoin",
+        "displayName": "Bitcoin",
+        "symbol": "BCH",
+        "derive_path": "m/44'/0'/0'/index",
+        "wallet" : new Bitcoin({network:'testnet'}),
     }
 }
 

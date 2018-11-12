@@ -1,6 +1,7 @@
 var has = require('lodash/has')
 var bip39 = require('bip39')
 const bs58 = require('bs58')
+const bitcoin = require('bitcoinjs-lib')
 
 var hdkey = require('ethereumjs-wallet/hdkey')
 var derivePath = require('ed25519-hd-key').derivePath;
@@ -110,6 +111,10 @@ class HDWallet {
     }else if(coin.name == 'stellar' || coin.name == 'ripple'){
       let data = derivePath(path, this.seedHex);
       return coin.wallet.getAccount(data.key);
+    }else if (coin.name == 'bitcoin'){
+      const root = bitcoin.bip32.fromSeed(Buffer.from(this.seedHex, 'hex'),coin.wallet.network);
+      const child = root.derivePath(path);
+      return coin.wallet.getAccount(child)
     }
   }
 
