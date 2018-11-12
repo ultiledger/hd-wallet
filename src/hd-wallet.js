@@ -5,8 +5,6 @@ const bitcoin = require('bitcoinjs-lib')
 
 var hdkey = require('ethereumjs-wallet/hdkey')
 var derivePath = require('ed25519-hd-key').derivePath;
-var getMasterKeyFromSeed = require('ed25519-hd-key').getMasterKeyFromSeed;
-var getPublicKey = require('ed25519-hd-key').getPublicKey;
 
 const ENTROPY_BITS = 256 // = 24 word mnemonic
 
