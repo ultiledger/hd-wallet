@@ -39,7 +39,7 @@ let assets = {
     "BTC" : {
         "name": "bitcoin",
         "displayName": "Bitcoin",
-        "symbol": "BCH",
+        "symbol": "BTC",
         "derive_path": "m/44'/0'/0'/index",
         "wallet" : new Bitcoin({network:'testnet'}),
     }

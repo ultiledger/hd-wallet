@@ -45,11 +45,11 @@ HDWallet.sendTransaction(coins.ETH, ethAccount0.secret, ethAccount1.address, {am
 let btckeypair = {  secret:'L4wZvj8hwwakJ6PTjKaMAngchDr2L6SSUoAaDshJSV4sC3DmFtVX',
                     address:'1M9VaPKbdsk78dqS85wtmoUaNjNY21p5x8'}
 let btcAccount0 = wallet.getAccount(coins.BTC,0);
-assert.deepEqual(btcAccount0.secret.toLowerCase(), btcAccount0.secret.toLowerCase());
+assert.deepEqual(btcAccount0.secret.toLowerCase(), btckeypair.secret.toLowerCase());
 let btcAccount1 = wallet.getAccount(coins.BTC,1);
 console.log('btcAccount0',btcAccount0);
 console.log('btcAccount1',btcAccount1);
-HDWallet.getAccountFromSecret(coins.BTC,btcAccount0.secret)
+assert.deepEqual(btckeypair.address.toLowerCase(), HDWallet.getAccountFromSecret(coins.BTC, btckeypair.secret).address.toLowerCase());
 HDWallet.sendTransaction(coins.BTC,btcAccount0.secret,btcAccount1.address,{amount: "10000"});
 
 console.log('done')

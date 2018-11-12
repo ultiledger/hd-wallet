@@ -110,9 +110,9 @@ class HDWallet {
       let data = derivePath(path, this.seedHex);
       return coin.wallet.getAccount(data.key);
     }else if (coin.name == 'bitcoin'){
-      const root = bitcoin.bip32.fromSeed(Buffer.from(this.seedHex, 'hex'),coin.wallet.network);
-      const child = root.derivePath(path);
-      return coin.wallet.getAccount(child)
+      // const root = bitcoin.bip32.fromSeed(Buffer.from(this.seedHex, 'hex'),coin.wallet.network);
+      // const child = root.derivePath(path);
+      return coin.wallet.getAccount(this.seedHex,path)
     }
   }
 

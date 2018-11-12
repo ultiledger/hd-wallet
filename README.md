@@ -38,3 +38,11 @@ let ethAccount0 = wallet.getAccount(coins.XLM,0);
 assert.deepEqual(ethkeypair, xlmkeypair);
 assert.deepEqual(ethkeypair,HDWallet.getAccountFromSecret(coins.ETH, ethkeypair.secret));
 
+
+// 生成bitcoin账户
+let btckeypair = {  secret:'L4wZvj8hwwakJ6PTjKaMAngchDr2L6SSUoAaDshJSV4sC3DmFtVX',
+                    address:'1M9VaPKbdsk78dqS85wtmoUaNjNY21p5x8'}
+
+let btcAccount0 = wallet.getAccount(coins.BTC,0);
+assert.deepEqual(btcAccount0.secret.toLowerCase(), btckeypair.secret.toLowerCase());
+assert.deepEqual(btckeypair.address.toLowerCase(), HDWallet.getAccountFromSecret(coins.BTC, btckeypair.secret).address.toLowerCase());

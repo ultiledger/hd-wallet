@@ -12,16 +12,18 @@ class BitcoinWallet{
         }
     }
 
-    getAccount(bip32) {
-        let keyPair = bitcoin.ECPair.fromWIF(bip32.toWIF(),this.network);
+    getAccount(seed,path) {
+        const root = bitcoin.bip32.fromSeed(Buffer.from(seed, 'hex'),this.network);
+        const child = root.derivePath(path);
+        let keyPair = bitcoin.ECPair.fromWIF(child.toWIF(),this.network);
         return this._getAccountFromECPair(keyPair);
     }
     getAccountFromSecret(secret) {
         const keyPair = this._getECPairFromSecret(secret);
         return this._getAccountFromECPair(keyPair);
     }
-    _getAccountFromECPair(keyPair,network){
-        let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey,network:this.network });
+    _getAccountFromECPair(keyPair){
+        let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
         let secret = wif.encode(0x80,Buffer.from(keyPair.privateKey, 'hex'),true);
         return {secret,address}
     }
