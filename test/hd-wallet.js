@@ -43,7 +43,7 @@ HDWallet.sendTransaction(coins.ETH, ethAccount0.secret, ethAccount1.address, {am
 
 // 生成bitcoin账户
 let btckeypair = {  secret:'L4wZvj8hwwakJ6PTjKaMAngchDr2L6SSUoAaDshJSV4sC3DmFtVX',
-                    address:'1M9VaPKbdsk78dqS85wtmoUaNjNY21p5x8'}
+                    address:'n1fSsSQaSuBMukK3qevGbiguEiyEvXjsPC'}
 let btcAccount0 = wallet.getAccount(coins.BTC,0);
 assert.deepEqual(btcAccount0.secret.toLowerCase(), btckeypair.secret.toLowerCase());
 let btcAccount1 = wallet.getAccount(coins.BTC,1);

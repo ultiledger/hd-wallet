@@ -23,7 +23,7 @@ class BitcoinWallet{
         return this._getAccountFromECPair(keyPair);
     }
     _getAccountFromECPair(keyPair){
-        let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
+        let { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey,network:this.network });
         let secret = wif.encode(0x80,Buffer.from(keyPair.privateKey, 'hex'),true);
         return {secret,address}
     }
