@@ -8,9 +8,11 @@ const bs58 = require('bs58');
 const assert = require('assert');
 const pushtx = require('blockchain.info/pushtx').usingNetwork(3);
 const wif = require('wif');
+const coinSelect = require('coinselect');
+
 
 console.log('step1-> generate address:');
-const mnemonic = 'phone payment tomorrow arrange enable same harsh bacon end initial innocent wet category sea focus brother opinion fever thing rocket venture shy vivid month';
+const mnemonic = 'praise you muffin lion enable neck grocery crumble super myself license ghost';
 const seed = bip39.mnemonicToSeed(mnemonic);
 const path = "m/44'/0'/0'/0";
 const root = bitcoin.bip32.fromSeed(seed,NETWORK);
@@ -29,19 +31,47 @@ console.log('========================');
 console.log('step2-> get utxos:');
 request('https://testnet.blockchain.info/unspent?active='+getAddress(alice),
     function (error, response, body) {
+        let amount = 200;
+        let fee = 1;
+
         let bodyObj = JSON.parse(body);
         if (!bodyObj) return new Error('no utxos back or error');
         let utxos = bodyObj.unspent_outputs;
+        if (utxos.length <= 0){
+            console.error('no utxo');
+            return new Error('no utxo');
+        }
         console.log('utxos',utxos);
 
         console.log('step3-> transaction:');
         const txb = new bitcoin.TransactionBuilder(NETWORK);
-        console.log('utxo',utxos[0]);
-        txb.addInput(utxos[0].tx_hash_big_endian, utxos[0].tx_output_n);
-        txb.addOutput(getAddress(bob),55000000);
-        txb.sign(0,alice);
+        let totalAmount = amount + fee;
+        let maxIndex = -1;
+        let totalInput = 0;
+        for (let i = 0; i < utxos.length; i++) {
+            if (totalInput >= totalAmount){
+                break;
+            }else {
+                txb.addInput(utxos[i].tx_hash_big_endian, utxos[i].tx_output_n);
+                totalInput += utxos[i].value;
+                console.log('[*****]add input-'+i,utxos[i].value,'totalInput='+totalInput);
+                maxIndex = i;
+            }
+        }
+        if (totalInput <= 0) {
+            console.error('no input');
+            return new Error('no input')
+        }
+        txb.addOutput(getAddress(bob),amount);
+        console.log('[*****]add output-',amount);
+        if (totalInput > totalAmount){
+            console.log('[*****]add change output-',totalInput - totalAmount);
+            txb.addOutput(getAddress(alice),totalInput - totalAmount);
+        }
+        for (let j = 0; j <= maxIndex; j++) {
+            txb.sign(j,alice);
+        }
         console.log('txb.build().toHex()',txb.build().toHex());
-        verifyTransaction(txb.build().toHex(),alice);
         pushtx.pushtx(txb.build().toHex());
 
     });
