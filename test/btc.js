@@ -27,6 +27,16 @@ const child2 = root2.derivePath(path2);
 let bob = importFromWIF(child2.toWIF());
 console.log('bob-address:',getAddress(bob));
 
+function validateAddress (address) {
+    try {
+        bitcoin.address.toOutputScript(address,NETWORK);
+        return true
+    } catch (e) {
+        return false
+    }
+}
+console.log('validateAddress',validateAddress(getAddress(bob)));
+
 console.log('========================');
 console.log('step2-> get utxos:');
 request('https://testnet.blockchain.info/unspent?active='+getAddress(alice),

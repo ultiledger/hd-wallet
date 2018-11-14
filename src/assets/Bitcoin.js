@@ -89,5 +89,18 @@ class BitcoinWallet{
 
             });
     }
+
+    getTxsByAddress(address,callback){
+       return request('https://testnet.blockchain.info/address/'+address+'J?format=json&offset=0',callback);
+    }
+
+    validateAddress (address) {
+        try {
+            bitcoin.address.toOutputScript(address,this.network);
+            return true
+        } catch (e) {
+            return false
+        }
+    }
 }
 module.exports = BitcoinWallet;
