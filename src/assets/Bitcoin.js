@@ -90,8 +90,10 @@ class BitcoinWallet{
             });
     }
 
-    getTxsByAddress(address,callback){
-       return request('https://testnet.blockchain.info/address/'+address+'J?format=json&offset=0',callback);
+    getTxsByAddress(address,offset,limit,callback){
+        let os = offset || 0;
+        let lm = limit || 50;
+       return request('https://testnet.blockchain.info/rawaddr/'+address+'?format=json&offset='+os+'&limit='+lm,callback);
     }
 
     validateAddress (address) {
