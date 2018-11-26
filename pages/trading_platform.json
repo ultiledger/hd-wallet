@@ -52,7 +52,11 @@
 		"xlm":""
 	},
 	"Bithumb":{
-		"xrp":"",
+		"xrp":"rsG1sNifXJxGS2nDQ9zHyoe1S5APrtwpjV",
+		"xlm":""
+	},
+	"Coinone":{
+		"xrp":"rp2diYfVtpbgEMyaoWnuaWgFCAkqCAEg28",
 		"xlm":""
 	}
 }
