@@ -1,4 +1,5 @@
-{
+{	
+	"version": "1.0.0",
     "stellar": {
       "ripplefox.com" : {
         "name" : "ripplefox.com",
