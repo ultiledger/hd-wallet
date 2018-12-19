@@ -1,6 +1,8 @@
 {	
     "version": "1.0.0",
-    "mytoken-api": "https://speed-api.mytokenapi.com",
+    "mytoken-api": {
+	   "url": "https://speed-api.mytokenapi.com"
+     },
     "stellar": {
       "ripplefox.com" : {
         "name" : "ripplefox.com",
